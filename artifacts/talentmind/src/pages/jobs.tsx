@@ -61,8 +61,8 @@ export default function JobsPage() {
   };
 
   return (
-    <div className="p-8 space-y-6 h-full overflow-y-auto">
-      <div className="flex items-center justify-between">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6 h-full overflow-y-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Job Descriptions</h1>
           <p className="text-muted-foreground">Manage your open positions and active ranking target.</p>
@@ -70,7 +70,7 @@ export default function JobsPage() {
         
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
-            <Button><Plus className="h-4 w-4 mr-2" /> Add Job</Button>
+            <Button className="w-full sm:w-auto"><Plus className="h-4 w-4 mr-2" /> Add Job</Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
@@ -102,7 +102,7 @@ export default function JobsPage() {
       </div>
 
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {[1, 2, 3].map(i => <Card key={i} className="h-64 animate-pulse bg-muted/50" />)}
         </div>
       ) : jobs?.length === 0 ? (
@@ -110,10 +110,10 @@ export default function JobsPage() {
           <Briefcase className="h-12 w-12 text-muted-foreground mb-4 opacity-50" />
           <h3 className="text-lg font-semibold">No jobs found</h3>
           <p className="text-sm text-muted-foreground mt-1 mb-4">Create your first job description to get started.</p>
-          <Button onClick={() => setIsCreateOpen(true)}><Plus className="h-4 w-4 mr-2" /> Add Job</Button>
+          <Button onClick={() => setIsCreateOpen(true)} className="w-full sm:w-auto"><Plus className="h-4 w-4 mr-2" /> Add Job</Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {jobs?.map(job => (
             <Card key={job.id} className={`flex flex-col transition-all duration-200 ${job.isActive ? 'border-primary ring-1 ring-primary shadow-md' : 'hover:border-primary/50'}`}>
               <CardHeader className="pb-3 flex-none">

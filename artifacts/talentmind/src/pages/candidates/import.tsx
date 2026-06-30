@@ -54,8 +54,8 @@ export default function ImportCandidatePage() {
   };
 
   return (
-    <div className="p-8 space-y-6 max-w-4xl mx-auto w-full">
-      <Button variant="ghost" className="mb-4 -ml-4" onClick={() => setLocation('/candidates')}>
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-4xl mx-auto w-full">
+      <Button variant="ghost" className="mb-4 -ml-4 min-h-[44px]" onClick={() => setLocation('/candidates')}>
         <ArrowLeft className="h-4 w-4 mr-2" /> Back to Candidates
       </Button>
 
@@ -75,7 +75,7 @@ export default function ImportCandidatePage() {
               <div className="space-y-2">
                 <Label>Target Job (Optional)</Label>
                 <Select value={jobId} onValueChange={setJobId}>
-                  <SelectTrigger>
+                  <SelectTrigger className="min-h-[44px]">
                     <SelectValue placeholder="Select a job" />
                   </SelectTrigger>
                   <SelectContent>
@@ -94,13 +94,13 @@ export default function ImportCandidatePage() {
                   value={csvData} 
                   onChange={e => setCsvData(e.target.value)} 
                   placeholder="name,email,skills,experienceYears,education,resumeText&#10;John Doe,john@example.com,React|TypeScript,5,BS CS,..." 
-                  className="min-h-[300px] font-mono text-sm whitespace-pre" 
+                  className="min-h-[300px] font-mono text-sm whitespace-pre text-base" 
                 />
               </div>
             </CardContent>
             <CardFooter className="flex justify-between border-t p-6">
-              <Button variant="outline" onClick={() => setLocation('/candidates')}>Cancel</Button>
-              <Button onClick={handleImport} disabled={!csvData.trim() || isImporting}>
+              <Button variant="outline" className="min-h-[44px]" onClick={() => setLocation('/candidates')}>Cancel</Button>
+              <Button onClick={handleImport} className="min-h-[44px]" disabled={!csvData.trim() || isImporting}>
                 <Upload className="h-4 w-4 mr-2" />
                 {isImporting ? "Importing..." : "Import CSV"}
               </Button>

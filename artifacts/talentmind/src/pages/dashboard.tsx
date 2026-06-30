@@ -11,12 +11,12 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-6">
         <div className="space-y-2">
           <Skeleton className="h-8 w-64" />
-          <Skeleton className="h-4 w-96" />
+          <Skeleton className="h-4 w-96 max-w-full" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-32 w-full" />)}
         </div>
         <Skeleton className="h-[400px] w-full" />
@@ -27,7 +27,7 @@ export default function Dashboard() {
   if (!summary) return null;
 
   return (
-    <div className="p-8 space-y-8 overflow-y-auto h-full">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-8 overflow-y-auto h-full">
       <div className="space-y-1">
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
@@ -77,7 +77,7 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         <Card>
           <CardHeader>
             <CardTitle>Top Ranked Candidates</CardTitle>
@@ -86,12 +86,12 @@ export default function Dashboard() {
           <CardContent>
             <div className="space-y-4">
               {summary.topCandidates.map((candidate) => (
-                <div key={candidate.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                  <div className="flex flex-col gap-1">
-                    <Link href={`/candidates/${candidate.id}`} className="font-semibold hover:underline">
+                <div key={candidate.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors gap-4">
+                  <div className="flex flex-col gap-1 min-w-0">
+                    <Link href={`/candidates/${candidate.id}`} className="font-semibold hover:underline truncate">
                       {candidate.name}
                     </Link>
-                    <span className="text-sm text-muted-foreground">{candidate.email}</span>
+                    <span className="text-sm text-muted-foreground truncate">{candidate.email}</span>
                   </div>
                   <ScoreBadge score={candidate.aiScore} />
                 </div>
@@ -116,7 +116,7 @@ export default function Dashboard() {
             <CardTitle>AI Insights</CardTitle>
             <CardDescription>Recent pipeline activity</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px] flex items-center justify-center bg-muted/20 border border-dashed rounded-lg">
+          <CardContent className="h-[200px] sm:h-[280px] lg:h-[300px] flex items-center justify-center bg-muted/20 border border-dashed rounded-lg">
             <div className="text-center space-y-2">
               <BarChart3 className="h-8 w-8 mx-auto text-muted-foreground" />
               <p className="text-sm text-muted-foreground">Full reports available in Analytics</p>

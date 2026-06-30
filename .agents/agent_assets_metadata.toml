@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "JbXeKLHCRypXHGasbNToE"
+uri = "file://artifacts/talentmind/public/logo.png"
+type = "image"
+title = "TalentMind AI logo neural nodes"

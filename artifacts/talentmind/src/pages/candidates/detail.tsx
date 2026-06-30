@@ -1,10 +1,10 @@
 import { useGetCandidate } from "@workspace/api-client-react";
 import { useParams, Link } from "wouter";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Briefcase, GraduationCap, Mail, Clock, BrainCircuit, Target, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Briefcase, GraduationCap, Mail, Clock, BrainCircuit, Target } from "lucide-react";
 import { ScoreBadge } from "@/components/ui/score-badge";
 
 export default function CandidateDetailPage() {
@@ -17,8 +17,8 @@ export default function CandidateDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="p-8 space-y-6">
-        <Skeleton className="h-10 w-64" />
+      <div className="p-4 sm:p-6 lg:p-8 space-y-6">
+        <Skeleton className="h-10 w-64 max-w-full" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Skeleton className="h-[400px] lg:col-span-2" />
           <Skeleton className="h-[400px]" />
@@ -27,7 +27,7 @@ export default function CandidateDetailPage() {
     );
   }
 
-  if (!candidate) return <div className="p-8">Candidate not found.</div>;
+  if (!candidate) return <div className="p-4 sm:p-6 lg:p-8">Candidate not found.</div>;
 
   // Circular gauge component
   const ScoreGauge = ({ score, label, colorClass }: { score: number | null | undefined, label: string, colorClass: string }) => {
@@ -70,25 +70,25 @@ export default function CandidateDetailPage() {
   };
 
   return (
-    <div className="p-8 space-y-6 h-full overflow-y-auto">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6 h-full overflow-y-auto">
       <Button variant="ghost" className="mb-2 -ml-4" asChild>
         <Link href="/candidates"><ArrowLeft className="h-4 w-4 mr-2" /> Back to Candidates</Link>
       </Button>
 
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold tracking-tight">{candidate.name}</h1>
-          <div className="flex items-center gap-4 mt-2 text-muted-foreground">
+          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">{candidate.name}</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2 text-muted-foreground">
             <span className="flex items-center gap-1"><Mail className="h-4 w-4" /> {candidate.email}</span>
             {candidate.rank && (
-              <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
+              <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 w-fit">
                 Rank #{candidate.rank}
               </Badge>
             )}
           </div>
         </div>
         <div className="flex gap-2 items-center">
-          <div className="text-right mr-4">
+          <div className="text-left sm:text-right sm:mr-4 mt-2 sm:mt-0">
             <div className="text-sm text-muted-foreground mb-1">Overall AI Score</div>
             <ScoreBadge score={candidate.aiScore} />
           </div>
@@ -182,32 +182,34 @@ export default function CandidateDetailPage() {
               <CardTitle className="text-center">Score Breakdown</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col items-center space-y-8 pt-4">
-              <ScoreGauge 
-                score={candidate.aiScore} 
-                label="Overall Match" 
-                colorClass={getColorForScore(candidate.aiScore)} 
-              />
-              
-              <div className="w-full h-px bg-border"></div>
-              
-              <div className="w-full grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Target className="h-4 w-4 mr-1 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider">Skills</span>
-                  </div>
-                  <div className={`text-2xl font-bold ${getColorForScore(candidate.skillMatchScore)}`}>
-                    {candidate.skillMatchScore || '-'}
-                  </div>
-                </div>
+              <div className="flex flex-row sm:flex-col lg:flex-col items-center justify-center gap-4 sm:gap-8 w-full">
+                <ScoreGauge 
+                  score={candidate.aiScore} 
+                  label="Overall Match" 
+                  colorClass={getColorForScore(candidate.aiScore)} 
+                />
                 
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Briefcase className="h-4 w-4 mr-1 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider">Experience</span>
+                <div className="hidden sm:block w-full h-px bg-border"></div>
+                
+                <div className="flex flex-row sm:w-full sm:grid sm:grid-cols-2 gap-4">
+                  <div className="text-center">
+                    <div className="flex items-center justify-center mb-2">
+                      <Target className="h-4 w-4 mr-1 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider">Skills</span>
+                    </div>
+                    <div className={`text-2xl font-bold ${getColorForScore(candidate.skillMatchScore)}`}>
+                      {candidate.skillMatchScore || '-'}
+                    </div>
                   </div>
-                  <div className={`text-2xl font-bold ${getColorForScore(candidate.experienceMatchScore)}`}>
-                    {candidate.experienceMatchScore || '-'}
+                  
+                  <div className="text-center">
+                    <div className="flex items-center justify-center mb-2">
+                      <Briefcase className="h-4 w-4 mr-1 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider">Experience</span>
+                    </div>
+                    <div className={`text-2xl font-bold ${getColorForScore(candidate.experienceMatchScore)}`}>
+                      {candidate.experienceMatchScore || '-'}
+                    </div>
                   </div>
                 </div>
               </div>

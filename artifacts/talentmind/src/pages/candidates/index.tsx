@@ -9,10 +9,8 @@ import { ScoreBadge } from "@/components/ui/score-badge";
 import { Link } from "wouter";
 import { Search, Trash2, UserPlus, Upload, Sparkles, Download, Eye } from "lucide-react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { customFetch } from "@workspace/api-client-react/src/custom-fetch"; // fallback if useRankCandidates isn't generated exactly, but we use the generated one
 import { useToast } from "@/hooks/use-toast";
 
-// Workaround to manually call rank if the hook isn't available or we want to use fetch directly
 const rankCandidatesFn = async (jobId: number) => {
   const res = await fetch('/api/candidates/rank', {
     method: 'POST',
@@ -72,26 +70,26 @@ export default function CandidatesPage() {
   );
 
   return (
-    <div className="p-8 space-y-6 h-full overflow-y-auto">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6 h-full overflow-y-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Candidates</h1>
           <p className="text-muted-foreground">Manage and rank your talent pool.</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button variant="outline" asChild>
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
+          <Button variant="outline" asChild className="w-full sm:w-auto">
             <Link href="/candidates/import"><Upload className="h-4 w-4 mr-2" /> Import CSV</Link>
           </Button>
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="w-full sm:w-auto">
             <Link href="/candidates/new"><UserPlus className="h-4 w-4 mr-2" /> Add Manually</Link>
           </Button>
-          <Button variant="outline" onClick={() => window.location.href = '/api/export/csv'}>
+          <Button variant="outline" onClick={() => window.location.href = '/api/export/csv'} className="w-full sm:w-auto">
             <Download className="h-4 w-4 mr-2" /> Export CSV
           </Button>
           <Button 
             onClick={handleRank} 
             disabled={!activeJob || rankMutation.isPending}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 w-full col-span-2 sm:col-span-1 sm:w-auto"
           >
             <Sparkles className={`h-4 w-4 mr-2 ${rankMutation.isPending ? 'animate-spin' : ''}`} /> 
             {rankMutation.isPending ? "Ranking..." : "Rank with AI"}
@@ -132,7 +130,7 @@ export default function CandidatesPage() {
               <TableRow className="bg-muted/50 hover:bg-muted/50">
                 <TableHead className="w-16 text-center">Rank</TableHead>
                 <TableHead>Candidate</TableHead>
-                <TableHead>Experience</TableHead>
+                <TableHead className="hidden sm:table-cell">Experience</TableHead>
                 <TableHead className="text-center">AI Score</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -162,19 +160,19 @@ export default function CandidatesPage() {
                         <span className="text-sm text-muted-foreground">{candidate.email}</span>
                       </div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="hidden sm:table-cell">
                       {candidate.experienceYears} years
                     </TableCell>
                     <TableCell className="text-center">
                       <ScoreBadge score={candidate.aiScore} />
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button variant="ghost" size="icon" asChild>
+                      <Button variant="ghost" size="icon" asChild className="min-h-[44px] min-w-[44px]">
                         <Link href={`/candidates/${candidate.id}`}>
                           <Eye className="h-4 w-4" />
                         </Link>
                       </Button>
-                      <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => handleDelete(candidate.id)}>
+                      <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10 min-h-[44px] min-w-[44px]" onClick={() => handleDelete(candidate.id)}>
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </TableCell>

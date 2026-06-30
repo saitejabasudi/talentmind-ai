@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Plus, X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 
 export default function NewCandidatePage() {
   const [, setLocation] = useLocation();
@@ -68,7 +68,7 @@ export default function NewCandidatePage() {
   };
 
   return (
-    <div className="p-8 space-y-6 max-w-4xl mx-auto w-full">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-4xl mx-auto w-full">
       <Button variant="ghost" className="mb-4 -ml-4" onClick={() => setLocation('/candidates')}>
         <ArrowLeft className="h-4 w-4 mr-2" /> Back to Candidates
       </Button>
@@ -85,7 +85,7 @@ export default function NewCandidatePage() {
             <CardDescription>Enter the candidate's basic information and resume.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input id="name" value={name} onChange={e => setName(e.target.value)} required placeholder="John Doe" />
@@ -120,7 +120,7 @@ export default function NewCandidatePage() {
                   onChange={e => setSkillInput(e.target.value)} 
                   onKeyDown={handleAddSkill} 
                   placeholder="Type a skill and press Enter..." 
-                  className="border-0 bg-transparent flex-1 focus-visible:ring-0 focus-visible:ring-offset-0 min-w-[200px] h-8 p-0"
+                  className="border-0 bg-transparent flex-1 focus-visible:ring-0 focus-visible:ring-offset-0 min-w-[200px] h-8 p-0 text-base"
                 />
               </div>
             </div>
@@ -132,13 +132,13 @@ export default function NewCandidatePage() {
                 value={resumeText} 
                 onChange={e => setResumeText(e.target.value)} 
                 placeholder="Paste the candidate's full resume here..." 
-                className="min-h-64 font-mono text-sm" 
+                className="min-h-[16rem] font-mono text-sm" 
               />
             </div>
           </CardContent>
           <CardFooter className="flex justify-between border-t p-6">
-            <Button type="button" variant="outline" onClick={() => setLocation('/candidates')}>Cancel</Button>
-            <Button type="submit" disabled={createCandidate.isPending}>
+            <Button type="button" variant="outline" className="min-h-[44px]" onClick={() => setLocation('/candidates')}>Cancel</Button>
+            <Button type="submit" className="min-h-[44px]" disabled={createCandidate.isPending}>
               {createCandidate.isPending ? "Saving..." : "Save Candidate"}
             </Button>
           </CardFooter>
